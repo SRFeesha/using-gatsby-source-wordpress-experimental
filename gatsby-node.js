@@ -74,8 +74,15 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
       allWpPost(sort: { fields: modifiedGmt, order: DESC }) {
         nodes {
           uri
-          id
-        }
+          title
+          link
+          author {
+            node {
+              id
+              name
+            }
+          }
+          excerpt
       }
     }
   `)

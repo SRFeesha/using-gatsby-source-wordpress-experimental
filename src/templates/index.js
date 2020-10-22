@@ -10,24 +10,18 @@ import { normalizePath } from "../utils/get-url-path"
 
 export default ({ data, pageContext }) => (
   <Layout>
+    <h1>INDEX COMPPONENT HERE</h1>
     <Stack spacing={5}>
-      {data.allWpPost.nodes.map((page) => (
+      {/* {data.allWpPost.nodes.map((page) => (
         <Box key={page.link}>
           <Link to={normalizePath(page.uri)}>
             <Box p={5} shadow="md" borderWidth="1px">
               <Grid templateColumns="1fr 2fr" gap={6}>
                 <Box>
-                  {!!page?.featuredImage?.node?.remoteFile?.childImageSharp && (
-                    <Img
-                      fluid={
-                        page.featuredImage.node.remoteFile.childImageSharp.fluid
-                      }
-                    />
-                  )}
-                </Box>
-                <Box>
                   <Heading as="h2" size="md">
-                    {page.title}
+                    <a href={page.link}>
+                      Title: {page.title}
+                    </a>
                   </Heading>
                   {!!page.author && !!page.author.name && (
                     <Heading as="h3" size="sm">
@@ -43,7 +37,7 @@ export default ({ data, pageContext }) => (
             </Box>
           </Link>
         </Box>
-      ))}
+      ))} */}
     </Stack>
 
     {pageContext && pageContext.totalPages > 1 && (
@@ -79,32 +73,19 @@ export default ({ data, pageContext }) => (
 )
 
 export const query = graphql`
-  fragment Thumbnail on File {
-    childImageSharp {
-      fluid(maxWidth: 500) {
-        ...GatsbyImageSharpFluid_tracedSVG
-      }
-    }
-  }
-
-  query HomePage($offset: Int!, $perPage: Int!) {
-    allWpPost(
-      limit: $perPage
-      skip: $offset
-      filter: { nodeType: { in: ["Post", "Page", "Alot"] } }
-      sort: { fields: date, order: DESC }
-    ) {
-      nodes {
-        uri
-        title
-        featuredImage {
-          node {
-            remoteFile {
-              ...Thumbnail
-            }
-          }
+{
+  allWpPost {
+    nodes {
+      uri
+      title
+      link
+      author {
+        node {
+          name
         }
       }
+      excerpt
     }
   }
+}
 `

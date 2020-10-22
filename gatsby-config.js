@@ -23,6 +23,10 @@ module.exports = {
         url:
           process.env.WPGRAPHQL_URL ||
           `https://staging-website.wonderflow.co/graphql`,
+        schema: {
+          //Prefixes all WP Types with "Wp" so "Post and allPost" become "WpPost and allWpPost".
+          typePrefix: `Wp`,
+        },
         verbose: true,
         develop: {
           hardCacheMediaFiles: true,
